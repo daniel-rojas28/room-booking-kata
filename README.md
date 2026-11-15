@@ -2,7 +2,28 @@
 
 A practice exercise for Java 21 + Spring Boot 3: an **existing, half-finished codebase** for booking meeting rooms. Some features are missing, and some of the code that's there has problems. You read it, fix it and extend it, the way you would on a real team.
 
-It covers REST controllers, Bean Validation, error handling, JPA and JPQL, transactions, pagination, HTTP headers (`Location`, `ETag`, `If-Match`), performance (N+1) and concurrency.
+## Topics
+
+What you'll practice, and where. Use it to pick tasks that cover your weak spots.
+
+| topic | what you practice | tasks |
+|---|---|---|
+| Reading existing code | finding your way in a codebase you didn't write; spotting bugs and bad patterns (field injection, `Optional.get()`, `findAll()` + filtering in Java) | 1, 8, all |
+| REST controllers | `@GetMapping`/`@PostMapping`/`@PatchMapping`, `@PathVariable`, `@RequestParam` (required by default, defaults), `ResponseEntity`, status codes 200/201/304/400/403/404/409/412 | 1–6 |
+| Bean Validation | `@Valid`, `@NotNull`/`@NotBlank`/`@Email`/`@Size`/`@Min`, optional fields in a PATCH body, rules that need code (dates, duration, 15-minute boundaries) | 2, 4, 5, 6 |
+| Error handling | one `@RestControllerAdvice` with a single error format; mapping framework exceptions (invalid body, bad JSON, missing parameter or header, wrong type) | 1–6 |
+| Business rules | checking rules in a fixed order; half-open time intervals; "now" from an injected `Clock`; case-insensitive emails | 2, 3, 4, 6 |
+| JPA and JPQL | entities and relationships, derived queries, `@Query`, overlap queries, `join fetch` / `@EntityGraph` | 2, 4, 5, 7, 8 |
+| Transactions | `@Transactional`, dirty checking, when `@Version` goes up (flush) | 3, 6 |
+| Pagination | `Pageable` / `Page`, sorting, paging in the database instead of in memory | 5 |
+| HTTP headers | `Location`, `X-Total-Count`, `ETag` + `If-None-Match` (304), `If-Match` (412), custom request headers | 2, 3, 5, 6, 9 |
+| Filters | a `OncePerRequestFilter` that applies to every response, errors included | 9 |
+| Performance | N+1 queries, loading only what you return, indexes | 5, 8 |
+| Concurrency | race conditions (check-then-insert), pessimistic vs optimistic locking, database constraints | 6, 10 |
+| Algorithms in Java | clipping intervals to a window, grouping and summing, sorting by several keys, rounding with `BigDecimal` | 7 |
+| Testing | MockMvc tests, a fixed `Clock`, adding your own tests for the cases you find | all |
+| Design thinking | measure before fixing; options and their costs (indexes, caching, precomputing, locking) | discussion questions |
+| Workflow | running the tests often, one commit per task, writing down trade-offs | all |
 
 ## How to use it
 
