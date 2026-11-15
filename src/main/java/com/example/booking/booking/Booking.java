@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Version;
 import java.time.LocalDateTime;
 
 @Entity
@@ -40,6 +41,9 @@ public class Booking {
     @Column(nullable = false)
     private BookingStatus status = BookingStatus.CONFIRMED;
 
+    @Version
+    private long version;
+
     protected Booking() {
     }
 
@@ -50,6 +54,16 @@ public class Booking {
         this.start = start;
         this.end = end;
         this.attendees = attendees;
+    }
+
+    /** null = not sent, keep the current value. */
+    public void update(String title, Integer attendees) {
+        if (title != null) this.title = title;
+        if (attendees != null) this.attendees = attendees;
+    }
+
+    public long getVersion() {
+        return version;
     }
 
     public void cancel() {

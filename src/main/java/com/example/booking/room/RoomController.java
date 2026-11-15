@@ -4,7 +4,6 @@ import com.example.booking.booking.BookingResponse;
 import com.example.booking.booking.BookingService;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,20 +14,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rooms")
 public class RoomController {
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomService roomService;
+    private final BookingService bookingService;
 
-    @Autowired
-    private BookingService bookingService;
+    public RoomController(RoomService roomService, BookingService bookingService) {
+        this.roomService = roomService;
+        this.bookingService = bookingService;
+    }
 
     @GetMapping
     public List<Room> all() {
-        return roomRepository.findAll();
+        return roomService.all();
     }
 
     @GetMapping("/{id}")
     public Room get(@PathVariable Long id) {
-        return roomRepository.findById(id).get();
+        return roomService.get(id);
+    }
+
+    @GetMapping("/available")
+    public List<Room> available(@RequestParam LocalDateTime start, @RequestParam LocalDateTime end,
+            @RequestParam int attendees) {
+        return roomService.available(start, end, attendees);
     }
 
     @GetMapping("/{id}/bookings")

@@ -11,10 +11,15 @@ public record BookingResponse(
         LocalDateTime start,
         LocalDateTime end,
         int attendees,
-        BookingStatus status) {
+        BookingStatus status,
+        long version) {
 
     public static BookingResponse from(Booking b) {
         return new BookingResponse(b.getId(), b.getRoom().getId(), b.getRoom().getName(), b.getOrganizerEmail(),
-                b.getTitle(), b.getStart(), b.getEnd(), b.getAttendees(), b.getStatus());
+                b.getTitle(), b.getStart(), b.getEnd(), b.getAttendees(), b.getStatus(), b.getVersion());
+    }
+
+    public String etag() {
+        return "\"" + version + "\"";
     }
 }
